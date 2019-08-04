@@ -4,28 +4,41 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TrendingComponent } from './trending/trending.component';
-import { DetailComponent } from './detail/detail.component';
-import { SavedComponent } from './saved/saved.component';
+
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { PagesComponent } from './pages/pages.component';
+import { MaterialModule } from './material/material.module';
+import { HttpClientModule } from '@angular/common/http';
+import {
+  StoreRouterConnectingModule,
+  routerReducer,
+  RouterStateSerializer
+} from '@ngrx/router-store';
+import { EffectsModule } from '@ngrx/effects';
+import { CustomSerializer } from './shared/utils';
+
 @NgModule({
   declarations: [
     AppComponent,
-    TrendingComponent,
-    DetailComponent,
-    SavedComponent,
     NotFoundComponent,
     NavbarComponent,
-    PagesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MaterialModule,
+    StoreModule,
+    StoreModule.forRoot({ router: routerReducer }),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument(),
+    HttpClientModule,
+    StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
   ],
-  providers: [],
+  providers: [{provide: RouterStateSerializer, useClass: CustomSerializer} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
