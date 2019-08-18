@@ -7,15 +7,17 @@ import * as fromRoot from '../../state/app-state';
 
 export interface RepositoryState {
     repositories: Repository[];
+    selectedRepository: Repository;
     loading: boolean;
     loaded: boolean;
     error: string;
 }
 export interface AppState extends fromRoot.AppState {
-    prepositories: RepositoryState;
+    repositories: RepositoryState;
 }
 export const initialState: RepositoryState = {
     repositories: [],
+    selectedRepository: null,
     loading: false,
     loaded: false,
     error: ''
@@ -46,6 +48,13 @@ export function repositoryReducer(state = initialState, action: repositoryAction
                 error: action.payload
             };
         }
+        case repositoryActions.RepositoryActionTypes.LOAD_REPOSITORY_SUCCESS: {
+            return {
+                ...state,
+                selectedRepository: action.payload
+            };
+
+        }
         default: {
             return state;
         }
@@ -68,9 +77,18 @@ export const getRepositoriesloaded = createSelector(
     getRepositoryFeatureState,
     (state: RepositoryState) => state.loaded
 );
+
 export const getError = createSelector(
     getRepositoryFeatureState,
     (state: RepositoryState) => state.error
 );
 
-
+export const getCurrentRepositoryName = createSelector(
+    getRepositoryFeatureState,
+    (state: RepositoryState) => state.selectedRepository.name
+);
+export const getCurrentRepository = createSelector(
+    getRepositoryFeatureState,
+    getCurrentRepositoryName,
+     state => state.selectedRepository
+);

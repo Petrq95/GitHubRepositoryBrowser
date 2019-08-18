@@ -15,7 +15,7 @@ import { Repository } from '../model/repository.model';
 export class RepositoryEffect {
     constructor(
         private actions$: Actions,
-        private postService: RepositoryService
+        private repositoryService: RepositoryService
     ) { }
 
     @Effect()
@@ -24,7 +24,7 @@ export class RepositoryEffect {
             repositoryAction.RepositoryActionTypes.LOAD_REPOSITORIES
         ),
         mergeMap((action: repositoryAction.LoadRepositories) =>
-            this.postService.getRepositories().pipe(
+            this.repositoryService.getRepositories().pipe(
                 map(
                     (repositories: Repository[]) =>
                         new repositoryAction.LoadRepositoriesSuccess(repositories)
@@ -34,19 +34,4 @@ export class RepositoryEffect {
         )
     );
 
-    @Effect()
-    loadRepository$: Observable<Action> = this.actions$.pipe(
-        ofType<repositoryAction.LoadRepository>(
-            repositoryAction.RepositoryActionTypes.LOAD_REPOSITORY
-        ),
-        mergeMap((action: repositoryAction.LoadRepository) =>
-            this.postService.getRepositoryByName(action.payload).pipe(
-                map(
-                    (repository: Repository) =>
-                        new repositoryAction.LoadRepositorySuccess(repository)
-                ),
-                catchError(err => of(new repositoryAction.LoadRepositoryFail(err)))
-            )
-        )
-    );
 }
