@@ -7,7 +7,7 @@ import * as fromRoot from '../../state/app-state';
 
 export interface RepositoryState {
     repositories: Repository[];
-    selectedRepository: Repository;
+    selectedRepositoryName: string;
     loading: boolean;
     loaded: boolean;
     error: string;
@@ -17,7 +17,7 @@ export interface AppState extends fromRoot.AppState {
 }
 export const initialState: RepositoryState = {
     repositories: [],
-    selectedRepository: null,
+    selectedRepositoryName: null,
     loading: false,
     loaded: false,
     error: ''
@@ -51,7 +51,9 @@ export function repositoryReducer(state = initialState, action: repositoryAction
         case repositoryActions.RepositoryActionTypes.LOAD_REPOSITORY_SUCCESS: {
             return {
                 ...state,
-                selectedRepository: action.payload
+                loading: false,
+                loaded: true,
+                selectedRepositoryName: action.payload.name
             };
 
         }
@@ -85,10 +87,10 @@ export const getError = createSelector(
 
 export const getCurrentRepositoryName = createSelector(
     getRepositoryFeatureState,
-    (state: RepositoryState) => state.selectedRepository.name
+    (state: RepositoryState) => state.selectedRepositoryName
 );
 export const getCurrentRepository = createSelector(
     getRepositoryFeatureState,
     getCurrentRepositoryName,
-     state => state.selectedRepository
+    state => state.repositories[state.selectedRepositoryName]
 );

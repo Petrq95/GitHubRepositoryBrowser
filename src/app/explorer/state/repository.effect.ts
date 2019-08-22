@@ -33,5 +33,21 @@ export class RepositoryEffect {
             )
         )
     );
+    @Effect()
+    loadRepository$: Observable<Action> = this.actions$.pipe(
+        ofType<repositoryAction.LoadRepository>(
+            repositoryAction.RepositoryActionTypes.LOAD_REPOSITORY
+        ),
+        mergeMap((action: repositoryAction.LoadRepository) =>
+            this.repositoryService.getRepositoryByName(action.payload).pipe(
+                map(
+                    (repository: Repository) =>
+                        new repositoryAction.LoadRepositorySuccess(repository)
+                ),
+                catchError(err => of(new repositoryAction.LoadRepositoryFail(err)))
+            )
+        )
+    );
+
 
 }
