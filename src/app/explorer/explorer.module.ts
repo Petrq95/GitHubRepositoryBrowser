@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { repositoryReducer } from './state/repository.reducer';
+import { featureReducer } from './state/repository.reducer';
 import { RepositoryEffect } from './state/repository.effect';
 
 import { MaterialModule } from '../material/material.module';
@@ -31,7 +31,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    StoreModule.forFeature('repositories', repositoryReducer),
+    StoreModule.forFeature('repositories', featureReducer),
     EffectsModule.forFeature([RepositoryEffect]),
     MaterialModule,
   ]

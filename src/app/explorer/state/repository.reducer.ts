@@ -1,8 +1,10 @@
-import * as repositoryActions from '../state/repository.action';
+import { createReducer, on, Action } from '@ngrx/store';
+import * as featureActions from './repository.action';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { Repository } from '../model/repository.model';
 import * as fromRoot from '../../state/app-state';
+import { Observable } from 'rxjs';
 
 
 export interface RepositoryState {
@@ -15,6 +17,7 @@ export interface RepositoryState {
 export interface AppState extends fromRoot.AppState {
     repositories: RepositoryState;
 }
+
 export const initialState: RepositoryState = {
     repositories: [],
     selectedRepositoryName: null,
@@ -24,44 +27,17 @@ export const initialState: RepositoryState = {
 
 };
 
-export function repositoryReducer(state = initialState, action: repositoryActions.Action): RepositoryState {
-    switch (action.type) {
-        case repositoryActions.RepositoryActionTypes.LOAD_REPOSITORIES: {
-            return {
-                ...state,
-                loading: true
-            };
-        }
-        case repositoryActions.RepositoryActionTypes.LOAD_REPOSITORIES_SUCCESS: {
-            return {
-                ...state,
-                loading: false,
-                loaded: true,
-                repositories: action.payload
-            };
-        }
-        case repositoryActions.RepositoryActionTypes.LOAD_REPOSITORIES_FAIL: {
-            return {
-                ...state,
-                loading: false,
-                loaded: true,
-                error: action.payload
-            };
-        }
-        case repositoryActions.RepositoryActionTypes.LOAD_REPOSITORY_SUCCESS: {
-            return {
-                ...state,
-                loading: false,
-                loaded: true,
-                selectedRepositoryName: action.payload.name
-            };
-
-        }
-        default: {
-            return state;
-        }
-    }
+export const featureReducer = createReducer(
+    initialState,
+    on(featureActions.loadRepositories, state => ({ ...state, isLoading: true, errorMessage: null })),
+    on(featureActions.loadRepositoriesSuccess, (state, { repositories }) =>
+     ({ ...state, isLoading: false, errorMessage: null, repositories })),
+    on(featureActions.loadRepositoriesFailure, (state, { errorMessage }) => ({ ...state, isLoading: false, errorMessage })),
+);
+export function reducer(state: RepositoryState | undefined, action: Action) {
+    return featureReducer(state, action);
 }
+
 const getRepositoryFeatureState = createFeatureSelector<RepositoryState>(
     'repositories'
 );
@@ -84,13 +60,15 @@ export const getError = createSelector(
     getRepositoryFeatureState,
     (state: RepositoryState) => state.error
 );
-
 export const getCurrentRepositoryName = createSelector(
     getRepositoryFeatureState,
     (state: RepositoryState) => state.selectedRepositoryName
 );
-export const getCurrentRepository = createSelector(
+
+export const getCurrentRepository = (EditedRepository) => createSelector(
     getRepositoryFeatureState,
     getCurrentRepositoryName,
-    state => state.repositories[state.selectedRepositoryName]
+    (state: RepositoryState) => {
+        return state.repositories.filter(() => getCurrentRepositoryName === EditedRepository);
+    }
 );

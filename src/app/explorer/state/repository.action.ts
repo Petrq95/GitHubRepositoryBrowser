@@ -1,56 +1,15 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { Repository } from '../model/repository.model';
 
-export enum RepositoryActionTypes {
-    LOAD_REPOSITORIES = '[Repository] Load Repositories',
-    LOAD_REPOSITORIES_SUCCESS = '[Repository] Load Repositories Success',
-    LOAD_REPOSITORIES_FAIL = '[Repository] Load Repositories Fail',
-    LOAD_REPOSITORY = '[Repository] Load REPOSITORY',
-    LOAD_REPOSITORY_SUCCESS = '[Repository] Load Repository Success',
-    LOAD_REPOSITORY_FAIL = '[Repository] Load Repository Fail',
-}
-export class LoadRepositories implements Action {
-    readonly type = RepositoryActionTypes.LOAD_REPOSITORIES;
-}
+export const loadRepositories = createAction('[Repositories] Load Repositories');
 
-export class LoadRepositoriesSuccess implements Action {
-    readonly type = RepositoryActionTypes.LOAD_REPOSITORIES_SUCCESS;
+export const loadRepositoriesSuccess = createAction('[Repositories] Load Success', props<{ repositories: Repository[] }>());
 
-    constructor(public payload: Repository[]) { }
-}
+export const loadRepositoriesFailure = createAction('[Repositories] Load Failure', props<{ errorMessage: string }>());
 
-export class LoadRepositoriesFail implements Action {
-    readonly type = RepositoryActionTypes.LOAD_REPOSITORIES_FAIL;
+export const loadRepository = createAction('[Repository] Load Repository', props<{ name: string }>());
 
-    constructor(public payload: string) { }
-}
+export const loadRepositorySuccess = createAction('[Repository] Load Repository Success', props<{ repositories: Repository }>());
 
-export class LoadRepository implements Action {
-    readonly type = RepositoryActionTypes.LOAD_REPOSITORY;
-
-    constructor(public payload: string) { }
-}
-
-export class LoadRepositorySuccess implements Action {
-    readonly type = RepositoryActionTypes.LOAD_REPOSITORY_SUCCESS;
-
-    constructor(public payload: Repository) { }
-}
-
-export class LoadRepositoryFail implements Action {
-    readonly type = RepositoryActionTypes.LOAD_REPOSITORY_FAIL;
-
-    constructor(public payload: string) { }
-}
-
-
-
-
-export type Action =
-    | LoadRepositories
-    | LoadRepositoriesSuccess
-    | LoadRepositoriesFail
-    | LoadRepository
-    | LoadRepositorySuccess
-    | LoadRepositoryFail;
+export const loadRepositoryFailure = createAction('[Repositories] Load Repository Failure', props<{ errorMessage: string }>());
 

@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 
-import * as repositoryActions from '../state/repository.action';
+import * as featureActions from '../state/repository.action';
 import * as fromRepository from '../state/repository.reducer';
 import { Repository } from '../model/repository.model';
 import { Router } from '@angular/router';
@@ -21,12 +21,12 @@ export class TrendingComponent implements OnInit {
               private route: ActivatedRoute, ) { }
 
   ngOnInit() {
-    this.store.dispatch(new repositoryActions.LoadRepositories());
+    this.store.dispatch(featureActions.loadRepositories());
     this.repositories$ = this.store.pipe(select(fromRepository.getRepositories));
     this.error$ = this.store.pipe(select(fromRepository.getError));
   }
   editRepositoryInfo(repository: Repository) {
-    this.store.dispatch(new repositoryActions.LoadRepositorySuccess(repository));
+    this.store.dispatch(featureActions.loadRepository(repository));
     this.router.navigate(['pages/detail', repository.name]);
   }
 }

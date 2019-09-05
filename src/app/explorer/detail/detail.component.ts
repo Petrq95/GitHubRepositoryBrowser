@@ -26,9 +26,6 @@ export class DetailComponent implements OnInit {
     private route: ActivatedRoute,
   ) { }
   ngOnInit(): void {
-    this.repository$ = this.store.select(fromRepository.getCurrentRepository);
-    this.loading = this.store.select(state => state.loading);
-
 
   }
 }
