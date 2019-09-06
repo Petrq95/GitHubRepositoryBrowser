@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -20,14 +20,22 @@ export class DetailComponent implements OnInit {
   repository$: Observable<Repository>;
   // tslint:disable-next-line: ban-types
   loading: Observable<Boolean>;
+  error$: Observable<any>;
+  loading$: Observable<boolean>;
   constructor(
     private store: Store<fromRepository.RepositoryState>,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
   ngOnInit(): void {
+    this.repository$ = this.store.pipe(select(fromRepository.getCurrentRepository));
 
+    this.error$ = this.store.pipe(select(fromRepository.getRepositoryError));
+    this.loading$ = this.store.pipe(
+    select(fromRepository.getRepositoriesLoading)
+  );
   }
+
 }
  /*this.route.paramMap.subscribe(params => {
     this.repository$.forEach((repository: Repository) => {

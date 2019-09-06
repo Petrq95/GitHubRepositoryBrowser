@@ -33,6 +33,10 @@ export const featureReducer = createReducer(
     on(featureActions.loadRepositoriesSuccess, (state, { repositories }) =>
      ({ ...state, isLoading: false, errorMessage: null, repositories })),
     on(featureActions.loadRepositoriesFailure, (state, { errorMessage }) => ({ ...state, isLoading: false, errorMessage })),
+    on(featureActions.loadRepository, (state, { name }) => ({
+        ...state,
+        selectedRepositoryName: name
+    }))
 );
 export function reducer(state: RepositoryState | undefined, action: Action) {
     return featureReducer(state, action);
@@ -60,15 +64,27 @@ export const getError = createSelector(
     getRepositoryFeatureState,
     (state: RepositoryState) => state.error
 );
-export const getCurrentRepositoryName = createSelector(
+const selectSelectedRepositoryName = createSelector(
     getRepositoryFeatureState,
-    (state: RepositoryState) => state.selectedRepositoryName
+    (state: RepositoryState): string => state.selectedRepositoryName
 );
 
-export const getCurrentRepository = (EditedRepository) => createSelector(
-    getRepositoryFeatureState,
-    getCurrentRepositoryName,
-    (state: RepositoryState) => {
-        return state.repositories.filter(() => getCurrentRepositoryName === EditedRepository);
+export const getCurrentRepository = createSelector(
+    getRepositories,
+    selectSelectedRepositoryName,
+    (repositories: Repository[], selectedRepositoryName: string) => {
+        if (repositories && selectedRepositoryName) {
+            return repositories.find(p => p.name === selectedRepositoryName);
+        } else {
+            return null;
+        }
     }
+);
+export const getRepositoryError = createSelector(
+    getRepositoryFeatureState,
+    (state: RepositoryState): any => state.error
+);
+export const getRepositoryLoading = createSelector(
+    getRepositoryFeatureState,
+    (state: RepositoryState): boolean => state.loading
 );

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 
-import { Observable, of } from 'rxjs';
-import { map, mergeMap, catchError, concatMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, catchError, concatMap } from 'rxjs/operators';
 
 import { RepositoryService } from '../../services/repository.service';
 import * as featureActions from '../state/repository.action';

@@ -25,8 +25,7 @@ export class TrendingComponent implements OnInit {
     this.repositories$ = this.store.pipe(select(fromRepository.getRepositories));
     this.error$ = this.store.pipe(select(fromRepository.getError));
   }
-  editRepositoryInfo(repository: Repository) {
-    this.store.dispatch(featureActions.loadRepository(repository));
-    this.router.navigate(['pages/detail', repository.name]);
+  onSelect(name: string) {
+    this.store.dispatch(featureActions.loadRepository({ name }));
   }
-}
+  }
