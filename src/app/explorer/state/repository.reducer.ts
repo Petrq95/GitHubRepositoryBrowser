@@ -33,9 +33,9 @@ export const featureReducer = createReducer(
     on(featureActions.loadRepositoriesSuccess, (state, { repositories }) =>
      ({ ...state, isLoading: false, errorMessage: null, repositories })),
     on(featureActions.loadRepositoriesFailure, (state, { errorMessage }) => ({ ...state, isLoading: false, errorMessage })),
-    on(featureActions.loadRepository, (state, { name }) => ({
+    on(featureActions.loadRepository, (state, { selectedRepository }) => ({
         ...state,
-        selectedRepositoryName: name
+        selectedRepositoryName: selectedRepository
     }))
 );
 export function reducer(state: RepositoryState | undefined, action: Action) {
@@ -64,12 +64,13 @@ export const getError = createSelector(
     getRepositoryFeatureState,
     (state: RepositoryState) => state.error
 );
-const selectSelectedRepositoryName = createSelector(
+
+export const selectSelectedRepositoryName = createSelector(
     getRepositoryFeatureState,
     (state: RepositoryState): string => state.selectedRepositoryName
 );
 
-export const getCurrentRepository = createSelector(
+export const getCurrentRepository  =() =>  createSelector(
     getRepositories,
     selectSelectedRepositoryName,
     (repositories: Repository[], selectedRepositoryName: string) => {

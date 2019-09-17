@@ -7,7 +7,7 @@ export const loadRepositoriesSuccess = createAction('[Repositories] Load Success
 
 export const loadRepositoriesFailure = createAction('[Repositories] Load Failure', props<{ errorMessage: string }>());
 
-export const loadRepository = createAction('[Repository] Load Repository', props<{ name: string }>());
+export const loadRepository = createAction('[Repository] Load Repository', props<{ selectedRepository: string }>());
 
 export const loadRepositorySuccess = createAction('[Repository] Load Repository Success', props<{ repositories: Repository }>());
 

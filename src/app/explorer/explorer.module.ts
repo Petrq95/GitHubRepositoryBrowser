@@ -13,11 +13,10 @@ import { PagesComponent } from './pages/pages.component';
 import { SavedComponent } from './saved/saved.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/pages', pathMatch: 'full' },
-  { path: 'pages', component: PagesComponent },
+  { path: '', redirectTo: '/trending', pathMatch: 'full' },
   { path: 'trending', component: TrendingComponent },
   { path: 'saved', component: SavedComponent },
-  { path: 'detail/:name', component: DetailComponent },
+  { path: 'detail', component: DetailComponent },
 
 ];
 

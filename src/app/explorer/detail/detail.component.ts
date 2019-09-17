@@ -28,11 +28,10 @@ export class DetailComponent implements OnInit {
     private route: ActivatedRoute,
   ) { }
   ngOnInit(): void {
-    this.repository$ = this.store.pipe(select(fromRepository.getCurrentRepository));
+    this.repository$ = this.store.pipe(select(fromRepository.getCurrentRepository()));
 
     this.error$ = this.store.pipe(select(fromRepository.getRepositoryError));
-    this.loading$ = this.store.pipe(
-    select(fromRepository.getRepositoriesLoading)
+    this.loading$ = this.store.pipe(select(fromRepository.getRepositoriesLoading)
   );
   }
 
