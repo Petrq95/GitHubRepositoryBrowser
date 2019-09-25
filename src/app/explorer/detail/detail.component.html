@@ -1,3 +1,4 @@
+<h1>Details</h1>
 <mat-card *ngIf="repository$ | async as repository">
     <mat-card-header>
     
@@ -5,10 +6,11 @@
             <div class="repository">
                 <a class="rep-aurhor">{{repository.author}}/{{repository.name}}</a>
             </div>
-            <div>
+            <div class="stars">
                 <a class="stars">
                     <mat-icon>star</mat-icon>{{repository.stars}}
                 </a>
+                <a class="language-color" [style.background-color]="repository.languageColor">{{repository.language}}</a>
             </div>
         </mat-card-title>
     </mat-card-header>
@@ -18,4 +20,12 @@
     <mat-card-actions>
         <button mat-button (click)="saveRepository(repository)">Save Repository</button>
     </mat-card-actions>
+    <div>
+        <h3>Build by</h3>
+        <mat-list>
+            <mat-list-item ></mat-list-item>
+            <mat-list-item >Item 2</mat-list-item>
+            <mat-list-item >Item 3</mat-list-item>
+        </mat-list>
+    </div>
 </mat-card>

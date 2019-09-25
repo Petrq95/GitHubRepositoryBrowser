@@ -1,6 +1,5 @@
 
 export interface Repository {
-  pipe(arg0: any);
     author: string;
     name: string;
     avatar: string;

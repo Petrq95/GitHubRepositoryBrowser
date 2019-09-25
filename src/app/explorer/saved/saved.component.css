@@ -1,21 +1,31 @@
 h1{
-    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 56px;
 }
 mat-card{
     margin:10px;
     border: solid 1px lightgrey;
 }
-mat-card-title{
+.mat-card-title{
     font-size: 24px;
     font-weight: bold;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-}
-mat-card-title .stars{
-    align-items: flex-end;
+    justify-content: space-between;
 }
 .repository :hover{
     text-decoration: underline;
     cursor: pointer;
+}
+mat-card-actions{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+.remove-button{
+    cursor: pointer;
+    color: blue;
 }

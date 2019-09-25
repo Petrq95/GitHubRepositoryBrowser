@@ -1,26 +1,23 @@
 <h1>Trending</h1>
-
-<mat-card class="example-card" *ngFor="let repository of (repositories$ | async)" (click)=onSelect(repository)>
+<mat-card class="example-card" *ngFor="let repository of (repositories$ | async)" >
     <mat-card-header>
-
-        <mat-card-title>
-            <div class="repository">  
+        <div class="mat-card-title">
+            <div class="repository"  (click)=onSelect(repository)>  
                 <a class="rep-aurhor">{{repository.author}}/{{repository.name}}</a> 
             </div>
             <div>
                 <a class="stars"><mat-icon>star</mat-icon>{{repository.stars}}</a>
             </div> 
-        </mat-card-title>
+        </div>
     </mat-card-header>
     <mat-card-content>
                   <p>{{repository.description}}</p>      
     </mat-card-content>
     <mat-card-actions>
-
+        <a class="language-color" [style.background-color]="repository.languageColor">{{repository.language}}</a>
     </mat-card-actions>
     
 </mat-card>
 
-<button routerLink="pages/saved">SOdsfljkfd</button>
 
 
