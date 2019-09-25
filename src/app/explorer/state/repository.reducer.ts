@@ -4,7 +4,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { Repository } from '../model/repository.model';
 import * as fromRoot from '../../state/app-state';
-import { Observable } from 'rxjs';
 
 
 export interface RepositoryState {
@@ -27,7 +26,7 @@ export const initialState: RepositoryState = {
 
 };
 
-export const featureReducer = createReducer(
+const repoReducer = createReducer(
     initialState,
     on(featureActions.loadRepositories, state => ({ ...state, isLoading: true, errorMessage: null })),
     on(featureActions.loadRepositoriesSuccess, (state, { repositories }) =>
@@ -38,8 +37,8 @@ export const featureReducer = createReducer(
         selectedRepositoryName: selectedRepository
     }))
 );
-export function reducer(state: RepositoryState | undefined, action: Action) {
-    return featureReducer(state, action);
+export function repReducer(state: RepositoryState | undefined, action: Action) {
+    return repoReducer(state, action);
 }
 
 const getRepositoryFeatureState = createFeatureSelector<RepositoryState>(

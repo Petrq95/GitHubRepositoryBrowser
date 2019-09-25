@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { featureReducer } from './state/repository.reducer';
+import { repReducer } from './state/repository.reducer';
 import { RepositoryEffect } from './state/repository.effect';
 
 import { MaterialModule } from '../material/material.module';
@@ -11,12 +11,13 @@ import { TrendingComponent } from './trending/trending.component';
 import { DetailComponent } from './detail/detail.component';
 import { PagesComponent } from './pages/pages.component';
 import { SavedComponent } from './saved/saved.component';
+import { reducerSaved } from './state/saved.reducer';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/trending', pathMatch: 'full' },
-  { path: 'trending', component: TrendingComponent },
+  { path: '', component: TrendingComponent },
+  { path: '', component: TrendingComponent },
   { path: 'saved', component: SavedComponent },
-  { path: 'detail', component: DetailComponent },
+  { path: 'detail/:name', component: DetailComponent },
 
 ];
 
@@ -29,8 +30,9 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
-    StoreModule.forFeature('repositories', featureReducer),
+    RouterModule.forChild(routes,),
+    StoreModule.forFeature('repositories', repReducer),
+    StoreModule.forFeature('saved', reducerSaved),
     EffectsModule.forFeature([RepositoryEffect]),
     MaterialModule,
   ]

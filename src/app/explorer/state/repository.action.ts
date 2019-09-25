@@ -9,7 +9,12 @@ export const loadRepositoriesFailure = createAction('[Repositories] Load Failure
 
 export const loadRepository = createAction('[Repository] Load Repository', props<{ selectedRepository: string }>());
 
-export const loadRepositorySuccess = createAction('[Repository] Load Repository Success', props<{ repositories: Repository }>());
+export const loadRepositorySuccess = createAction('[Repository] Load Repository Success', props<{ repository: Repository }>());
 
 export const loadRepositoryFailure = createAction('[Repositories] Load Repository Failure', props<{ errorMessage: string }>());
 
+export const saveRepository = createAction('[Repository] Repository Saved', props<{ repository: Repository }>());
+
+export const loadSavedRepositoriesSuccess = createAction('[Repositories] Load Load Saved Repositories Success', );
+
+export const deleteRepository = createAction('[Repository] Delete Repository', props<{ saved: Repository }>());

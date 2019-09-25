@@ -1,0 +1,21 @@
+h1{
+    text-align: center;
+}
+mat-card{
+    margin:10px;
+    border: solid 1px lightgrey;
+}
+mat-card-title{
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+mat-card-title .stars{
+    align-items: flex-end;
+}
+.repository :hover{
+    text-decoration: underline;
+    cursor: pointer;
+}

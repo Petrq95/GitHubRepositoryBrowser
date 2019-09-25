@@ -33,8 +33,11 @@ export class DetailComponent implements OnInit {
     this.error$ = this.store.pipe(select(fromRepository.getRepositoryError));
     this.loading$ = this.store.pipe(select(fromRepository.getRepositoriesLoading)
   );
+  
   }
-
+saveRepository(repository: Repository){
+    this.store.dispatch(repositoryActions.saveRepository({repository: repository}));
+  }
 }
  /*this.route.paramMap.subscribe(params => {
     this.repository$.forEach((repository: Repository) => {

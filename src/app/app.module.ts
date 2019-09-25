@@ -19,6 +19,7 @@ import {
 } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { CustomSerializer } from './shared/utils';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @NgModule({
   declarations: [
@@ -31,14 +32,15 @@ import { CustomSerializer } from './shared/utils';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    StoreModule,
     StoreModule.forRoot({ router: routerReducer }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument(),
     HttpClientModule,
-    StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
+    StoreRouterConnectingModule.forRoot({ stateKey: 'router' } ),
   ],
   providers: [{provide: RouterStateSerializer, useClass: CustomSerializer} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
